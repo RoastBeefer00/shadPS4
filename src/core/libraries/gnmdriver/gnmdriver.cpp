@@ -361,6 +361,17 @@ s32 PS4_SYSV_ABI sceGnmAddEqEvent(SceKernelEqueue eq, u64 id, void* udata) {
         return ORBIS_KERNEL_ERROR_EBADF;
     }
 
+    Platform::InterruptId interruptId;
+    GnmEventIdents eventId;
+
+    if (id == 64) {
+        interruptId = Platform::InterruptId::GfxEop;
+        eventId = GnmEventIdents::GfxEop;
+    } else if (id >= 0 && id <= 6) {
+        interruptId = static_cast<Platform::InterruptId>(id);
+        eventId = static_cast<GnmEventIdents>(id);
+    }
+
     EqueueEvent kernel_event{};
     kernel_event.event.ident = id;
     kernel_event.event.filter = SceKernelEvent::Filter::GraphicsCore;
@@ -372,12 +383,12 @@ s32 PS4_SYSV_ABI sceGnmAddEqEvent(SceKernelEqueue eq, u64 id, void* udata) {
     eq->AddEvent(kernel_event);
 
     Platform::IrqC::Instance()->Register(
-        Platform::InterruptId::GfxEop,
+        interruptId,
         [=](Platform::InterruptId irq) {
-            ASSERT_MSG(irq == Platform::InterruptId::GfxEop,
+            ASSERT_MSG(irq == interruptId,
                        "An unexpected IRQ occured"); // We need to convert IRQ# to event id and do
                                                      // proper filtering in trigger function
-            eq->TriggerEvent(GnmEventIdents::GfxEop, SceKernelEvent::Filter::GraphicsCore, nullptr);
+            eq->TriggerEvent(eventId, SceKernelEvent::Filter::GraphicsCore, nullptr);
         },
         eq);
     return ORBIS_OK;

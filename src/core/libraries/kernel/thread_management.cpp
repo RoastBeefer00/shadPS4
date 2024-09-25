@@ -414,6 +414,7 @@ ScePthreadMutex* createMutex(ScePthreadMutex* addr) {
     if (addr == nullptr || *addr != nullptr) {
         return addr;
     }
+
     const VAddr vaddr = reinterpret_cast<VAddr>(addr);
     std::string name = fmt::format("mutex{:#x}", vaddr);
     scePthreadMutexInit(addr, nullptr, name.c_str());
@@ -423,6 +424,10 @@ ScePthreadMutex* createMutex(ScePthreadMutex* addr) {
 int PS4_SYSV_ABI scePthreadMutexInit(ScePthreadMutex* mutex, const ScePthreadMutexattr* mutex_attr,
                                      const char* name) {
     const ScePthreadMutexattr* attr;
+
+    if ((u64)mutex == 0x0000001000150100) {
+        printf("init bad\n");
+    }
 
     if (mutex == nullptr) {
         return SCE_KERNEL_ERROR_EINVAL;
@@ -436,6 +441,8 @@ int PS4_SYSV_ABI scePthreadMutexInit(ScePthreadMutex* mutex, const ScePthreadMut
             attr = mutex_attr;
         }
     }
+
+    attr = g_pthread_cxt->getDefaultMutexattr();
 
     *mutex = new PthreadMutexInternal{};
     if (name != nullptr) {
@@ -554,10 +561,18 @@ int PS4_SYSV_ABI scePthreadMutexattrSetprotocol(ScePthreadMutexattr* attr, int p
 }
 
 int PS4_SYSV_ABI scePthreadMutexLock(ScePthreadMutex* mutex) {
+    static u64 locks = 0;
+
+    if ((u64)mutex == 0x0000001000150100) {
+        printf("lock bad\n");
+    }
+
     mutex = createMutex(mutex);
     if (mutex == nullptr) {
         return SCE_KERNEL_ERROR_EINVAL;
     }
+
+    locks++;
 
     int result = pthread_mutex_lock(&(*mutex)->pth_mutex);
     if (result != 0) {
@@ -581,6 +596,10 @@ int PS4_SYSV_ABI scePthreadMutexLock(ScePthreadMutex* mutex) {
 int PS4_SYSV_ABI scePthreadMutexUnlock(ScePthreadMutex* mutex) {
     if (mutex == nullptr || *mutex == nullptr) {
         return SCE_KERNEL_ERROR_EINVAL;
+    }
+
+    if ((u64)mutex == 0x0000001000150100) {
+        printf("unlock bad\n");
     }
 
     int result = pthread_mutex_unlock(&(*mutex)->pth_mutex);
@@ -1334,6 +1353,10 @@ int PS4_SYSV_ABI posix_pthread_key_create(u32* key, Destructor func) {
     return rc;
 }
 
+int PS4_SYSV_ABI posix_pthread_key_delete(u32 key) {
+    return pthread_key_delete(key);
+}
+
 int PS4_SYSV_ABI posix_pthread_setspecific(int key, const void* value) {
     return pthread_setspecific(key, value);
 }
@@ -1556,6 +1579,7 @@ void pthreadSymbolsRegister(Core::Loader::SymbolsResolver* sym) {
     LIB_FUNCTION("2MOy+rUfuhQ", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_cond_signal);
     LIB_FUNCTION("RXXqi4CtF8w", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_cond_destroy);
     LIB_FUNCTION("mqULNdimTn0", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_key_create);
+    LIB_FUNCTION("6BpEZuDT7YI", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_key_delete);
     LIB_FUNCTION("0-KXaS70xy4", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_getspecific);
     LIB_FUNCTION("WrOLvHU0yQM", "libScePosix", 1, "libkernel", 1, 1, posix_pthread_setspecific);
     LIB_FUNCTION("4+h9EzwKF4I", "libkernel", 1, "libkernel", 1, 1, scePthreadAttrSetschedpolicy);
@@ -1615,6 +1639,9 @@ void pthreadSymbolsRegister(Core::Loader::SymbolsResolver* sym) {
     LIB_FUNCTION("tn3VlD0hG60", "libkernel", 1, "libkernel", 1, 1, scePthreadMutexUnlock);
     LIB_FUNCTION("upoVrzMHFeE", "libkernel", 1, "libkernel", 1, 1, scePthreadMutexTrylock);
     LIB_FUNCTION("IafI2PxcPnQ", "libkernel", 1, "libkernel", 1, 1, scePthreadMutexTimedlock);
+
+    LIB_FUNCTION("qH1gXoq71RY", "libkernel", 1, "libkernel", 1, 1, scePthreadMutexInit);
+    LIB_FUNCTION("n2MMpvU8igI", "libkernel", 1, "libkernel", 1, 1, scePthreadMutexattrInit);
 
     // cond calls
     LIB_FUNCTION("2Tb92quprl0", "libkernel", 1, "libkernel", 1, 1, scePthreadCondInit);
