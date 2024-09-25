@@ -173,6 +173,8 @@ public:
     int MapFile(void** out_addr, VAddr virtual_addr, size_t size, MemoryProt prot,
                 MemoryMapFlags flags, uintptr_t fd, size_t offset);
 
+    void PoolDecommit(VAddr virtual_addr, size_t size);
+
     void UnmapMemory(VAddr virtual_addr, size_t size);
 
     int QueryProtection(VAddr addr, void** start, void** end, u32* prot);

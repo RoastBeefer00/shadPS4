@@ -420,4 +420,23 @@ s32 PS4_SYSV_ABI sceKernelMemoryPoolCommit(void *addr, size_t len, int type, int
     return memory->PoolCommit(in_addr, len, mem_prot);
 }
 
+s32 PS4_SYSV_ABI sceKernelMemoryPoolDecommit(void *addr, size_t len, int flags) {
+    if (addr == nullptr) {
+        LOG_ERROR(Kernel_Vmm, "Address is invalid!");
+        return SCE_KERNEL_ERROR_EINVAL;
+    }
+    if (len == 0 || !Common::Is64KBAligned(len)) {
+        LOG_ERROR(Kernel_Vmm, "Map size is either zero or not 64KB aligned!");
+        return SCE_KERNEL_ERROR_EINVAL;
+    }
+
+    LOG_INFO(Kernel_Vmm, "addr = {}, len = {:#x}, flags = {:#x}", fmt::ptr(addr), len, flags);
+
+    const VAddr pool_addr = reinterpret_cast<VAddr>(addr);
+    auto* memory = Core::Memory::Instance();
+    memory->PoolDecommit(pool_addr, len);
+
+    return ORBIS_OK;
+}
+
 } // namespace Libraries::Kernel

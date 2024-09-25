@@ -240,7 +240,7 @@ int MemoryManager::PoolCommit(VAddr virtual_addr, size_t size, MemoryProt prot) 
     new_vma.name = "";
     new_vma.type = Core::VMAType::Pooled;
     new_vma.is_exec = false;
-    new_vma.phys_base = -1;
+    new_vma.phys_base = 0;
 
     return ORBIS_OK;
 }
@@ -326,6 +326,39 @@ int MemoryManager::MapFile(void** out_addr, VAddr virtual_addr, size_t size, Mem
 
     *out_addr = std::bit_cast<void*>(mapped_addr);
     return ORBIS_OK;
+}
+
+void MemoryManager::PoolDecommit(VAddr virtual_addr, size_t size) {
+    std::scoped_lock lk{mutex};
+    
+    const auto it = FindVMA(virtual_addr);
+    const auto& vma_base = it->second;
+    ASSERT_MSG(vma_base.Contains(virtual_addr, size),
+               "Existing mapping does not contain requested unmap range");
+
+    const auto vma_base_addr = vma_base.base;
+    const auto vma_base_size = vma_base.size;
+    const auto phys_base = vma_base.phys_base;
+    const bool is_exec = vma_base.is_exec;
+    const auto start_in_vma = virtual_addr - vma_base_addr;
+    const auto type = vma_base.type;
+
+    rasterizer->UnmapMemory(virtual_addr, size);
+
+    // Mark region as free and attempt to coalesce it with neighbours.
+    const auto new_it = CarveVMA(virtual_addr, size);
+    auto& vma = new_it->second;
+    vma.type = VMAType::PoolReserved;
+    vma.prot = MemoryProt::NoAccess;
+    vma.phys_base = 0;
+    vma.disallow_merge = false;
+    vma.name = "";
+    MergeAdjacent(vma_map, new_it);
+
+    // Unmap the memory region.
+    impl.Unmap(vma_base_addr, vma_base_size, start_in_vma, start_in_vma + size, phys_base, is_exec,
+               false, false);
+    TRACK_FREE(virtual_addr, "VMEM");
 }
 
 void MemoryManager::UnmapMemory(VAddr virtual_addr, size_t size) {
