@@ -515,9 +515,29 @@
 			<translation>تحقق من التحديثات عند بدء التشغيل</translation>
 		</message>
 		<message>
+			<location filename="../settings_dialog.ui" line="313"/>
+			<source>Update Channel</source>
+			<translation>قناة التحديث</translation>
+		</message>
+		<message>
 			<location filename="../settings_dialog.ui" line="322"/>
 			<source>Check for Updates</source>
 			<translation>التحقق من التحديثات</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="354"/>
+			<source>GUI Settings</source>
+			<translation>إعدادات الواجهة</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="375"/>
+			<source>Play title music</source>
+			<translation>تشغيل موسيقى العنوان</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="394"/>
+			<source>Volume</source>
+			<translation>الصوت</translation>
 		</message>
 	</context>
 	<context>
@@ -953,6 +973,111 @@
 			<source>Close</source>
 			<translation>إغلاق</translation>
 		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="72"/>
+			<source>Point your mouse at an option to display its description.</source>
+			<translation>وجّه الماوس نحو خيار لعرض وصفه.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="289"/>
+			<source>consoleLanguageGroupBox</source>
+			<translation>لغة الجهاز:\nتحدد لغة اللعبة التي يستخدمها جهاز PS4.\nيوصى بضبطها على لغة يدعمها الجهاز، والتي قد تختلف حسب المنطقة.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="291"/>
+			<source>emulatorLanguageGroupBox</source>
+			<translation>لغة المحاكي:\nتحدد لغة واجهة المستخدم الخاصة بالمحاكي.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="293"/>
+			<source>fullscreenCheckBox</source>
+			<translation>تمكين وضع ملء الشاشة:\nيجعل نافذة اللعبة تنتقل تلقائيًا إلى وضع ملء الشاشة.\nيمكن التبديل بالضغط على المفتاح F11.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="295"/>
+			<source>showSplashCheckBox</source>
+			<translation>إظهار شاشة البداية:\nيعرض شاشة البداية الخاصة باللعبة (صورة خاصة) أثناء بدء التشغيل.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="297"/>
+			<source>ps4proCheckBox</source>
+			<translation>هل هو PS4 Pro:\nيجعل المحاكي يعمل كـ PS4 PRO، مما قد يتيح ميزات خاصة في الألعاب التي تدعمه.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="299"/>
+			<source>userName</source>
+			<translation>اسم المستخدم:\nيضبط اسم حساب PS4، الذي قد يتم عرضه في بعض الألعاب.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="301"/>
+			<source>logTypeGroupBox</source>
+			<translation>نوع السجل:\nيضبط ما إذا كان سيتم مزامنة مخرجات نافذة السجل للأداء. قد يؤثر سلبًا على المحاكاة.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="303"/>
+			<source>logFilter</source>
+			<translation>فلتر السجل: يقوم بتصفية السجل لطباعة معلومات محددة فقط. أمثلة: "Core:Trace" "Lib.Pad:Debug Common.Filesystem:Error" "*:Critical" المستويات: Trace, Debug, Info, Warning, Error, Critical - بالترتيب، مستوى محدد يخفي جميع المستويات التي تسبقه ويعرض جميع المستويات بعده.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="305"/>
+			<source>updaterGroupBox</source>
+			<translation>تحديث: Release: إصدارات رسمية تصدر شهريًا، قد تكون قديمة بعض الشيء، لكنها أكثر استقرارًا واختبارًا. Nightly: إصدارات تطوير تحتوي على أحدث الميزات والإصلاحات، لكنها قد تحتوي على أخطاء وأقل استقرارًا.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="306"/>
+			<source>GUIgroupBox</source>
+			<translation>تشغيل موسيقى العنوان:\nإذا كانت اللعبة تدعم ذلك، قم بتمكين تشغيل موسيقى خاصة عند اختيار اللعبة في واجهة المستخدم.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="312"/>
+			<source>graphicsAdapterGroupBox</source>
+			<translation>جهاز الرسومات:\nعلى الأنظمة متعددة وحدات معالجة الرسومات، اختر وحدة معالجة الرسومات التي سيستخدمها المحاكي من قائمة منسدلة،\nأو اختر "Auto Select" لتحديدها تلقائيًا.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="314"/>
+			<source>resolutionLayout</source>
+			<translation>العرض / الارتفاع:\nيضبط حجم نافذة المحاكي عند التشغيل، والذي يمكن تغيير حجمه أثناء اللعب.\nهذا يختلف عن دقة اللعبة نفسها.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="318"/>
+			<source>heightDivider</source>
+			<translation>مقسم معدل التحديث:\nيتم مضاعفة معدل الإطارات الذي يتم تحديث المحاكي به بواسطة هذا الرقم. قد يؤدي تغيير هذا إلى آثار سلبية، مثل زيادة سرعة اللعبة أو كسر الوظائف الأساسية التي لا تتوقع هذا التغيير!</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="320"/>
+			<source>dumpShadersCheckBox</source>
+			<translation>تمكين تفريغ الـ Shaders:\nلأغراض تصحيح الأخطاء التقنية، يحفظ الـ Shaders الخاصة باللعبة في مجلد أثناء التشغيل.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="322"/>
+			<source>nullGpuCheckBox</source>
+			<translation>تمكين GPU الافتراضية:\nلأغراض تصحيح الأخطاء التقنية، يقوم بتعطيل عرض اللعبة كما لو لم يكن هناك بطاقة رسومات.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="323"/>
+			<source>dumpPM4CheckBox</source>
+			<translation>تمكين تفريغ PM4:\nلأغراض تصحيح الأخطاء التقنية، يحفظ بيانات تعليمات GPU الأولية في مجلد أثناء معالجتها.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="329"/>
+			<source>debugDump</source>
+			<translation>تمكين تفريغ التصحيح:\nيحفظ رموز الاستيراد والتصدير ومعلومات رأس الملف للبرنامج الحالي لجهاز PS4 إلى دليل.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="331"/>
+			<source>vkValidationCheckBox</source>
+			<translation>تمكين طبقات التحقق من Vulkan:\nيتيح نظام يتحقق من حالة مشغل Vulkan ويسجل معلومات حول حالته الداخلية. سيؤدي هذا إلى تقليل الأداء ومن المحتمل تغيير سلوك المحاكاة.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="333"/>
+			<source>vkSyncValidationCheckBox</source>
+			<translation>تمكين التحقق من تزامن Vulkan:\nيتيح نظام يتحقق من توقيت مهام عرض Vulkan. سيؤدي ذلك إلى تقليل الأداء ومن المحتمل تغيير سلوك المحاكاة.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="335"/>
+			<source>rdocCheckBox</source>
+			<translation>تمكين تصحيح RenderDoc:\nإذا تم التمكين، سيوفر المحاكي توافقًا مع Renderdoc لالتقاط وتحليل الإطار الذي يتم عرضه حاليًا.</translation>
+		</message>
 	</context>
 	<context>
 		<name>GameListFrame</name>
@@ -1010,16 +1135,6 @@
 			<translation>خطأ</translation>
 		</message>
 		<message>
-			<location filename="../check_update.cpp" line="52"/>
-			<source>Invalid update channel: </source>
-			<translation>قناة تحديث غير صالحة: </translation>
-		</message>
-		<message>
-			<location filename="../check_update.cpp" line="53"/>
-			<source>In updateChannel in config.tml file must contain 'stable' or 'unstable'</source>
-			<translation>يجب أن يحتوي updateChannel في ملف config.tml على 'stable' أو 'unstable'</translation>
-		</message>
-		<message>
 			<location filename="../check_update.cpp" line="64"/>
 			<source>Network error:</source>
 			<translation>خطأ في الشبكة:</translation>
@@ -1053,6 +1168,11 @@
 			<location filename="../check_update.cpp" line="172"/>
 			<source>Update Available</source>
 			<translation>تحديث متاح</translation>
+		</message>
+		<message> 
+			<location filename="../check_update.cpp" line="187"/>
+			<source>Update Channel</source>
+			<translation>قناة التحديث</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="177"/>

@@ -402,12 +402,12 @@
 		<message>
 			<location filename="../settings_dialog.ui" line="122"/>
 			<source>Enable Fullscreen</source>
-			<translation>Включить полноэкранный режим</translation>
+			<translation>Полноэкранный режим</translation>
 		</message>
 		<message>
 			<location filename="../settings_dialog.ui" line="129"/>
 			<source>Show Splash</source>
-			<translation>Показать заставку</translation>
+			<translation>Показывать заставку</translation>
 		</message>
 		<message>
 			<location filename="../settings_dialog.ui" line="136"/>
@@ -457,7 +457,7 @@
 		<message>
 			<location filename="../settings_dialog.ui" line="405"/>
 			<source>Vblank Divider</source>
-			<translation>Разделитель Vblank</translation>
+			<translation>Делитель Vblank</translation>
 		</message>
 		<message>
 			<location filename="../settings_dialog.ui" line="453"/>
@@ -515,9 +515,29 @@
 			<translation>Проверка обновлений при запуске</translation>
 		</message>
 		<message>
+			<location filename="../settings_dialog.ui" line="313"/>
+			<source>Update Channel</source>
+			<translation>Канал обновления</translation>
+		</message>
+		<message>
 			<location filename="../settings_dialog.ui" line="322"/>
 			<source>Check for Updates</source>
 			<translation>Проверить обновления</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="354"/>
+			<source>GUI Settings</source>
+			<translation>Настройки интерфейса</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="375"/>
+			<source>Play title music</source>
+			<translation>Воспроизведение заглавной музыки</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.ui" line="394"/>
+			<source>Volume</source>
+			<translation>Громкость</translation>
 		</message>
 	</context>
 	<context>
@@ -928,7 +948,7 @@
 		<message>
 			<location filename="../cheats_patches.cpp" line="1163"/>
 			<source>Can't apply cheats before the game is started</source>
-			<translation>Невозможно применить читы до начала игрыs</translation>
+			<translation>Невозможно применить читы до начала игры</translation>
 		</message>
 	</context>
 	<context>
@@ -946,12 +966,117 @@
 		<message>
 			<location filename="../settings_dialog.cpp" line="85"/>
 			<source>Restore Defaults</source>
-			<translation>Восстановить умолчания</translation>
+			<translation>По умолчанию</translation>
 		</message>
 		<message>
 			<location filename="../settings_dialog.cpp" line="86"/>
 			<source>Close</source>
 			<translation>Закрыть</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="72"/>
+			<source>Point your mouse at an option to display its description.</source>
+			<translation>Наведите указатель мыши на опцию, чтобы отобразить ее описание.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="289"/>
+			<source>consoleLanguageGroupBox</source>
+			<translation>Язык консоли:\nУстановите язык, который будет использоваться в играх PS4.\nРекомендуется устанавливать язык который поддерживается игрой, так как он может отличаться в зависимости от региона.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="291"/>
+			<source>emulatorLanguageGroupBox</source>
+			<translation>Язык эмулятора:\nУстановите язык пользовательского интерфейса эмулятора.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="293"/>
+			<source>fullscreenCheckBox</source>
+			<translation>Полноэкранный режим:\nАвтоматически переводит игровое окно в полноэкранный режим.\nВы можете отключить это, нажав клавишу F11.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="295"/>
+			<source>showSplashCheckBox</source>
+			<translation>Показывать заставку:\nОтображает заставку игры (специальное изображение) во время запуска игры.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="297"/>
+			<source>ps4proCheckBox</source>
+			<translation>Режим PS4 Pro:\nЗаставляет эмулятор работать как PS4 Pro, что может включить специальные функции в играх, поддерживающих это.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="299"/>
+			<source>userName</source>
+			<translation>Имя пользователя:\nУстановите имя пользователя аккаунта PS4. Это может отображаться в некоторых играх.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="301"/>
+			<source>logTypeGroupBox</source>
+			<translation>Тип логов:\nУстановите, синхронизировать ли вывод окна логов ради производительности. Это может негативно сказаться на эмуляции.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="303"/>
+			<source>logFilter</source>
+			<translation>Фильтр логов: Фильтрует логи, чтобы показывать только определенную информацию. Примеры: "Core:Trace" "Lib.Pad:Debug Common.Filesystem:Error" "*:Critical" Уровни: Trace, Debug, Info, Warning, Error, Critical - в этом порядке, конкретный уровень глушит все предыдущие уровни в списке и показывает все последующие уровни.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="305"/>
+			<source>updaterGroupBox</source>
+			<translation>Обновление:\nRelease: Официальные версии, которые выпускаются каждый месяц и могут быть очень старыми, но они более надежные и проверенные.\nNightly: Версии разработки, которые содержат все последние функции и исправления, но могут содержать ошибки и менее стабильны.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="306"/>
+			<source>GUIgroupBox</source>
+			<translation>Воспроизведение заглавной музыки:\nЕсли игра это поддерживает, включает воспроизведение специальной музыки при выборе игры в интерфейсе.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="312"/>
+			<source>graphicsAdapterGroupBox</source>
+			<translation>Графическое устройство:\nВ системах с несколькими GPU выберите GPU, который будет использовать эмулятор из выпадающего списка,\nили выберите "Auto Select", чтобы определить его автоматически.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="314"/>
+			<source>resolutionLayout</source>
+			<translation>Ширина/Высота:\nУстановите размер окна эмулятора при запуске, который может быть изменен во время игры.\nЭто отличается от разрешения в игре.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="318"/>
+			<source>heightDivider</source>
+			<translation>Делитель Vblank:\nЧастота кадров, с которой обновляется эмулятор, умножается на это число. Изменение этого параметра может иметь негативные последствия, такие как увеличение скорости игры или нарушение критических функций игры, которые этого не ожидают!</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="320"/>
+			<source>dumpShadersCheckBox</source>
+			<translation>Включить дамп шейдеров:\nДля технической отладки сохраняет шейдеры игр в папку во время рендеринга.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="322"/>
+			<source>nullGpuCheckBox</source>
+			<translation>Включить NULL GPU:\nДля технической отладки отключает рендеринг игры так, как будто графической карты нет.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="323"/>
+			<source>dumpPM4CheckBox</source>
+			<translation>Включить дамп PM4:\nДля технической отладки сохраняет необработанные данные инструкций GPU в папку, пока эмулятор их обрабатывает.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="329"/>
+			<source>debugDump</source>
+			<translation>Включить отладочные дампы:\nСохраняет символы импорта, экспорта и информацию о заголовке файла текущей исполняемой программы PS4 в папку.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="331"/>
+			<source>vkValidationCheckBox</source>
+			<translation>Включить слои валидации Vulkan:\nВключает систему, которая проверяет состояние рендерера Vulkan и логирует информацию о его внутреннем состоянии. Это снизит производительность и, вероятно, изменит поведение эмуляции.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="333"/>
+			<source>vkSyncValidationCheckBox</source>
+			<translation>Включить валидацию синхронизации Vulkan:\nВключает систему, которая проверяет тайминг задач рендеринга Vulkan. Это снизит производительность и, вероятно, изменит поведение эмуляции.</translation>
+		</message>
+		<message>
+			<location filename="../settings_dialog.cpp" line="335"/>
+			<source>rdocCheckBox</source>
+			<translation>Включить отладку RenderDoc:\nЕсли включено, эмулятор обеспечит совместимость с Renderdoc, позволяя захватывать и анализировать текущие кадры во время рендеринга.</translation>
 		</message>
 	</context>
 	<context>
@@ -1010,19 +1135,9 @@
 			<translation>Ошибка</translation>
 		</message>
 		<message>
-			<location filename="../check_update.cpp" line="52"/>
-			<source>Invalid update channel: </source>
-			<translation>Недопустимый канал обновления: </translation>
-		</message>
-		<message>
-			<location filename="../check_update.cpp" line="53"/>
-			<source>In updateChannel in config.tml file must contain 'stable' or 'unstable'</source>
-			<translation>В файле config.tml параметр updateChannel должен содержать 'stable' или 'unstable'</translation>
-		</message>
-		<message>
 			<location filename="../check_update.cpp" line="64"/>
 			<source>Network error:</source>
-			<translation>Ошибка сети:</translation>
+			<translation>Сетевая ошибка:</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="73"/>
@@ -1054,6 +1169,11 @@
 			<source>Update Available</source>
 			<translation>Доступно обновление</translation>
 		</message>
+		<message> 
+			<location filename="../check_update.cpp" line="187"/>
+			<source>Update Channel</source>
+			<translation>Канал обновления</translation>
+		</message>
 		<message>
 			<location filename="../check_update.cpp" line="177"/>
 			<source>Current Version</source>
@@ -1067,12 +1187,12 @@
 		<message>
 			<location filename="../check_update.cpp" line="179"/>
 			<source>Do you want to update?</source>
-			<translation>Вы хотите обновить?</translation>
+			<translation>Вы хотите обновиться?</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="193"/>
 			<source>Show Changelog</source>
-			<translation>Показать изменения</translation>
+			<translation>Показать журнал изменений</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="198"/>
@@ -1082,7 +1202,7 @@
 		<message>
 			<location filename="../check_update.cpp" line="199"/>
 			<source>Update</source>
-			<translation>Обновить</translation>
+			<translation>Обновиться</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="200"/>
@@ -1092,17 +1212,17 @@
 		<message>
 			<location filename="../check_update.cpp" line="223"/>
 			<source>Hide Changelog</source>
-			<translation>Скрыть изменения</translation>
+			<translation>Скрыть журнал изменений</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="296"/>
 			<source>Changes</source>
-			<translation>Изменения</translation>
+			<translation>Журнал изменений</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="310"/>
 			<source>Network error occurred while trying to access the URL</source>
-			<translation>Произошла ошибка сети при попытке доступа к URL</translation>
+			<translation>Произошла сетевая ошибка при попытке доступа к URL</translation>
 		</message>
 		<message>
 			<location filename="../check_update.cpp" line="330"/>

@@ -3,7 +3,9 @@
 
 #include <QCompleter>
 #include <QDirIterator>
+#include <QHoverEvent>
 
+#include <common/version.h>
 #include "check_update.h"
 #include "common/logging/backend.h"
 #include "common/logging/filter.h"
@@ -67,6 +69,9 @@ SettingsDialog::SettingsDialog(std::span<const QString> physical_devices, QWidge
 
     InitializeEmulatorLanguages();
     LoadValuesFromConfig();
+
+    defaultTextEdit = tr("Point your mouse at an option to display its description.");
+    ui->descriptionText->setText(defaultTextEdit);
 
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QWidget::close);
 
@@ -135,8 +140,17 @@ SettingsDialog::SettingsDialog(std::span<const QString> physical_devices, QWidge
             checkUpdate->exec();
         });
 
-        connect(ui->playBGMCheckBox, &QCheckBox::stateChanged, this,
-                [](int val) { Config::setPlayBGM(val); });
+        connect(ui->playBGMCheckBox, &QCheckBox::stateChanged, this, [](int val) {
+            Config::setPlayBGM(val);
+            if (val == Qt::Unchecked) {
+                BackgroundMusicPlayer::getInstance().stopMusic();
+            }
+        });
+
+        connect(ui->BGMVolumeSlider, &QSlider::valueChanged, this, [](float val) {
+            Config::setBGMvolume(val);
+            BackgroundMusicPlayer::getInstance().setVolume(val);
+        });
     }
 
     // GPU TAB
@@ -160,9 +174,6 @@ SettingsDialog::SettingsDialog(std::span<const QString> physical_devices, QWidge
 
         connect(ui->nullGpuCheckBox, &QCheckBox::stateChanged, this,
                 [](int val) { Config::setNullGpu(val); });
-
-        connect(ui->dumpPM4CheckBox, &QCheckBox::stateChanged, this,
-                [](int val) { Config::setDumpPM4(val); });
     }
 
     // DEBUG TAB
@@ -179,6 +190,35 @@ SettingsDialog::SettingsDialog(std::span<const QString> physical_devices, QWidge
         connect(ui->rdocCheckBox, &QCheckBox::stateChanged, this,
                 [](int val) { Config::setRdocEnabled(val); });
     }
+
+    // Descriptions
+    {
+        // General
+        ui->consoleLanguageGroupBox->installEventFilter(this);
+        ui->emulatorLanguageGroupBox->installEventFilter(this);
+        ui->fullscreenCheckBox->installEventFilter(this);
+        ui->showSplashCheckBox->installEventFilter(this);
+        ui->ps4proCheckBox->installEventFilter(this);
+        ui->userName->installEventFilter(this);
+        ui->logTypeGroupBox->installEventFilter(this);
+        ui->logFilter->installEventFilter(this);
+        ui->updaterGroupBox->installEventFilter(this);
+        ui->GUIgroupBox->installEventFilter(this);
+
+        // Graphics
+        ui->graphicsAdapterGroupBox->installEventFilter(this);
+        ui->widthGroupBox->installEventFilter(this);
+        ui->heightGroupBox->installEventFilter(this);
+        ui->heightDivider->installEventFilter(this);
+        ui->dumpShadersCheckBox->installEventFilter(this);
+        ui->nullGpuCheckBox->installEventFilter(this);
+
+        // Debug
+        ui->debugDump->installEventFilter(this);
+        ui->vkValidationCheckBox->installEventFilter(this);
+        ui->vkSyncValidationCheckBox->installEventFilter(this);
+        ui->rdocCheckBox->installEventFilter(this);
+    }
 }
 
 void SettingsDialog::LoadValuesFromConfig() {
@@ -194,8 +234,8 @@ void SettingsDialog::LoadValuesFromConfig() {
     ui->vblankSpinBox->setValue(Config::vblankDiv());
     ui->dumpShadersCheckBox->setChecked(Config::dumpShaders());
     ui->nullGpuCheckBox->setChecked(Config::nullGpu());
-    ui->dumpPM4CheckBox->setChecked(Config::dumpPM4());
     ui->playBGMCheckBox->setChecked(Config::getPlayBGM());
+    ui->BGMVolumeSlider->setValue((Config::getBGMvolume()));
     ui->fullscreenCheckBox->setChecked(Config::isFullscreenMode());
     ui->showSplashCheckBox->setChecked(Config::showSplash());
     ui->ps4proCheckBox->setChecked(Config::isNeoMode());
@@ -209,7 +249,15 @@ void SettingsDialog::LoadValuesFromConfig() {
     ui->rdocCheckBox->setChecked(Config::isRdocEnabled());
 
     ui->updateCheckBox->setChecked(Config::autoUpdate());
-    ui->updateComboBox->setCurrentText(QString::fromStdString(Config::getUpdateChannel()));
+    std::string updateChannel = Config::getUpdateChannel();
+    if (updateChannel != "Release" && updateChannel != "Nightly") {
+        if (Common::isRelease) {
+            updateChannel = "Release";
+        } else {
+            updateChannel = "Nightly";
+        }
+    }
+    ui->updateComboBox->setCurrentText(QString::fromStdString(updateChannel));
 }
 
 void SettingsDialog::InitializeEmulatorLanguages() {
@@ -246,3 +294,86 @@ int SettingsDialog::exec() {
 }
 
 SettingsDialog::~SettingsDialog() {}
+
+void SettingsDialog::updateNoteTextEdit(const QString& elementName) {
+    QString text; // texts are only in .ts translation files for better formatting
+
+    // General
+    if (elementName == "consoleLanguageGroupBox") {
+        text = tr("consoleLanguageGroupBox");
+    } else if (elementName == "emulatorLanguageGroupBox") {
+        text = tr("emulatorLanguageGroupBox");
+    } else if (elementName == "fullscreenCheckBox") {
+        text = tr("fullscreenCheckBox");
+    } else if (elementName == "showSplashCheckBox") {
+        text = tr("showSplashCheckBox");
+    } else if (elementName == "ps4proCheckBox") {
+        text = tr("ps4proCheckBox");
+    } else if (elementName == "userName") {
+        text = tr("userName");
+    } else if (elementName == "logTypeGroupBox") {
+        text = tr("logTypeGroupBox");
+    } else if (elementName == "logFilter") {
+        text = tr("logFilter");
+    } else if (elementName == "updaterGroupBox") {
+        text = tr("updaterGroupBox");
+    } else if (elementName == "GUIgroupBox") {
+        text = tr("GUIgroupBox");
+    }
+
+    // Graphics
+    if (elementName == "graphicsAdapterGroupBox") {
+        text = tr("graphicsAdapterGroupBox");
+    } else if (elementName == "widthGroupBox") {
+        text = tr("resolutionLayout");
+    } else if (elementName == "heightGroupBox") {
+        text = tr("resolutionLayout");
+    } else if (elementName == "heightDivider") {
+        text = tr("heightDivider");
+    } else if (elementName == "dumpShadersCheckBox") {
+        text = tr("dumpShadersCheckBox");
+    } else if (elementName == "nullGpuCheckBox") {
+        text = tr("nullGpuCheckBox");
+    } else if (elementName == "dumpPM4CheckBox") {
+        text = tr("dumpPM4CheckBox");
+    }
+
+    // Debug
+    if (elementName == "debugDump") {
+        text = tr("debugDump");
+    } else if (elementName == "vkValidationCheckBox") {
+        text = tr("vkValidationCheckBox");
+    } else if (elementName == "vkSyncValidationCheckBox") {
+        text = tr("vkSyncValidationCheckBox");
+    } else if (elementName == "rdocCheckBox") {
+        text = tr("rdocCheckBox");
+    }
+
+    ui->descriptionText->setText(text.replace("\\n", "\n"));
+}
+
+bool SettingsDialog::eventFilter(QObject* obj, QEvent* event) {
+    if (event->type() == QEvent::Enter || event->type() == QEvent::Leave) {
+        if (qobject_cast<QWidget*>(obj)) {
+            bool hovered = (event->type() == QEvent::Enter);
+            QString elementName = obj->objectName();
+
+            if (hovered) {
+                updateNoteTextEdit(elementName);
+            } else {
+                ui->descriptionText->setText(defaultTextEdit);
+            }
+
+            // if the text exceeds the size of the box, it will increase the size
+            int documentHeight = ui->descriptionText->document()->size().height();
+            int visibleHeight = ui->descriptionText->viewport()->height();
+            if (documentHeight > visibleHeight) {
+                ui->descriptionText->setMinimumHeight(90);
+            } else {
+                ui->descriptionText->setMinimumHeight(70);
+            }
+            return true;
+        }
+    }
+    return QDialog::eventFilter(obj, event);
+}
